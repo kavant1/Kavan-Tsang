@@ -9,6 +9,7 @@ export default defineConfig({
   // Canonical origin — required for canonical URLs, OpenGraph, and the sitemap.
   // GitHub Pages serves the user site at the lowercase host.
   site: "https://kavant1.github.io",
+  base: "/Kavan-Tsang",
   integrations: [sitemap(), react()],
   vite: {
     plugins: [tailwindcss()],

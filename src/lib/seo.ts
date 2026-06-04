@@ -10,7 +10,7 @@ import { siteConfig } from "../config";
  * Privacy: email is intentionally never included (see config.ts / HANDOFF.md).
  */
 
-const FALLBACK_SITE = "https://kavant1.github.io";
+const FALLBACK_SITE = "https://kavant1.github.io/Kavan-Tsang";
 
 /** Resolve a path to an absolute URL against the configured site origin. */
 export function abs(path: string, site: string | URL = FALLBACK_SITE): string {
