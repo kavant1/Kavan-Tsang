@@ -38,10 +38,10 @@ const hasExperience = siteConfig.experience && siteConfig.experience.length > 0;
               style={`--d:${index * 0.05}s`}
             >
               {/* Mobile timeline rail + dot */}
-              <span class="md:hidden absolute left-[5px] top-2 bottom-0 w-px"
-                    style="background: linear-gradient(to bottom, var(--accent), var(--border))" />
-              <span class="md:hidden absolute left-0 top-1.5 w-2.5 h-2.5 rounded-full"
-                    style="background: var(--accent); box-shadow: 0 0 0 4px color-mix(in srgb, var(--accent) 18%, transparent), 0 0 12px color-mix(in srgb, var(--accent) 35%, transparent)" />
+              <span class="exp-mobile-line md:hidden absolute left-[5px] top-2 bottom-0 w-px"
+                    style="background: linear-gradient(to bottom, var(--accent), var(--border)); transform: scaleY(0); transform-origin: top; transition: transform 0.5s ease;" />
+              <span class="exp-mobile-dot md:hidden absolute left-0 top-1.5 w-2.5 h-2.5 rounded-full"
+                    style="background: var(--border-strong); transition: background 0.3s, box-shadow 0.3s;" />
 
               <div class="md:text-right">
                 <span class="t-faint text-sm font-medium">{exp.dateRange}</span>
@@ -149,5 +149,26 @@ const hasExperience = siteConfig.experience && siteConfig.experience.length > 0;
     };
     window.addEventListener("scroll", onScroll, { passive: true });
     window.addEventListener("resize", () => { alignX(); update(); });
+  }
+
+  // ── Mobile: IntersectionObserver lights up each entry's dot + line ──
+  const entries = Array.from(document.querySelectorAll(".exp-entry")) as HTMLElement[];
+  if (entries.length > 0 && window.matchMedia("(max-width: 767px)").matches) {
+    const observer = new IntersectionObserver((observed) => {
+      observed.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+        const el   = entry.target as HTMLElement;
+        const dot  = el.querySelector(".exp-mobile-dot")  as HTMLElement | null;
+        const line = el.querySelector(".exp-mobile-line") as HTMLElement | null;
+        if (dot) {
+          dot.style.background  = "var(--accent)";
+          dot.style.boxShadow   = "0 0 0 4px color-mix(in srgb, var(--accent) 18%, transparent), 0 0 12px color-mix(in srgb, var(--accent) 35%, transparent)";
+        }
+        if (line) line.style.transform = "scaleY(1)";
+        observer.unobserve(el);
+      });
+    }, { threshold: 0.15 });
+
+    entries.forEach((el) => observer.observe(el));
   }
 </script>
