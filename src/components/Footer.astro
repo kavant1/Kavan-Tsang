@@ -6,11 +6,11 @@ const hasExperience = siteConfig.experience && siteConfig.experience.length > 0;
 const hasEducation = siteConfig.education && siteConfig.education.length > 0;
 
 const navLinks = [
-  { href: "/#about", label: "About", show: true },
-  { href: "/#projects", label: "Projects", show: hasProjects },
-  { href: "/#experience", label: "Experience", show: hasExperience },
-  { href: "/#education", label: "Education", show: hasEducation },
-  { href: "/#contact", label: "Contact", show: true },
+  { href: "#about", label: "About", show: true },
+  { href: "#projects", label: "Projects", show: hasProjects },
+  { href: "#experience", label: "Experience", show: hasExperience },
+  { href: "#education", label: "Education", show: hasEducation },
+  { href: "#contact", label: "Contact", show: true },
 ].filter((l) => l.show);
 ---
 
@@ -18,14 +18,14 @@ const navLinks = [
   <div class="shell py-14">
     <div class="flex flex-col md:flex-row md:items-start md:justify-between gap-10">
       <div class="max-w-sm">
-        <a href="/#top" class="brand">
+        <a href="#top" class="brand">
           <span class="brand-mark">KT</span>
           <span>Kavan Tsang</span>
         </a>
         <p class="t-muted text-sm mt-4 leading-relaxed">{siteConfig.title}</p>
 
         <div class="flex items-center gap-5 mt-6">
-          <a href="/#contact" aria-label="Contact" class="social-link">
+          <a href="#contact" aria-label="Contact" class="social-link">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
               <path d="M3 7a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v10a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2v-10z" />
               <path d="M3 7l9 6l9 -6" />

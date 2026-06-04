@@ -10,11 +10,11 @@ interface NavItem {
 }
 
 const NAV_ITEMS: NavItem[] = [
-  { name: "About",      url: "/#about",      icon: User },
-  { name: "Projects",   url: "/#projects",   icon: FolderOpen },
-  { name: "Experience", url: "/#experience", icon: Briefcase },
-  { name: "Education",  url: "/#education",  icon: GraduationCap },
-  { name: "Contact",    url: "/#contact",    icon: Mail },
+  { name: "About",      url: "#about",      icon: User },
+  { name: "Projects",   url: "#projects",   icon: FolderOpen },
+  { name: "Experience", url: "#experience", icon: Briefcase },
+  { name: "Education",  url: "#education",  icon: GraduationCap },
+  { name: "Contact",    url: "#contact",    icon: Mail },
 ];
 
 export function TubelightNavBar() {
@@ -23,7 +23,7 @@ export function TubelightNavBar() {
   // Scrollspy — sync active item with the visible section
   useEffect(() => {
     const targets = NAV_ITEMS.map(item => ({
-      id: item.url.replace("/#", ""),
+      id: item.url.split("#")[1],
       name: item.name,
     }));
 
