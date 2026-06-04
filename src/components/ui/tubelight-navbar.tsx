@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { motion } from "framer-motion";
 import { User, FolderOpen, Briefcase, GraduationCap, Mail } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
@@ -19,6 +19,8 @@ const NAV_ITEMS: NavItem[] = [
 
 export function TubelightNavBar() {
   const [activeTab, setActiveTab] = useState("About");
+  const scrollLocked = useRef(false);
+  const lockTimer    = useRef<ReturnType<typeof setTimeout>>();
 
   // Scrollspy — sync active item with the visible section
   useEffect(() => {
@@ -29,6 +31,8 @@ export function TubelightNavBar() {
 
     const observer = new IntersectionObserver(
       entries => {
+        // Skip updates while a click-scroll is in progress
+        if (scrollLocked.current) return;
         entries.forEach(entry => {
           if (entry.isIntersecting) {
             const match = targets.find(t => t.id === entry.target.id);
@@ -65,7 +69,14 @@ export function TubelightNavBar() {
           <a
             key={item.name}
             href={item.url}
-            onClick={() => setActiveTab(item.name)}
+            onClick={() => {
+              setActiveTab(item.name);
+              scrollLocked.current = true;
+              clearTimeout(lockTimer.current);
+              lockTimer.current = setTimeout(() => {
+                scrollLocked.current = false;
+              }, 1000);
+            }}
             className="relative rounded-full px-5 py-2 text-sm font-semibold cursor-pointer no-underline select-none"
             style={{ color: isActive ? "var(--accent)" : "var(--text-muted)" }}
           >
