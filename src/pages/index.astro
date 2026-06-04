@@ -50,7 +50,7 @@ import "../styles/global.css";
     <div
       id="neural-bg-wrapper"
       class="fixed inset-0 pointer-events-none"
-      style="z-index: -3; opacity: 0; transition: opacity 0.6s ease;"
+      style="z-index: -3; opacity: 0;"
     >
       <NeuralBackground
         client:only="react"
@@ -61,13 +61,15 @@ import "../styles/global.css";
     </div>
 
     <script>
-      const bgWrapper   = document.getElementById("neural-bg-wrapper");
-      const heroSection = document.getElementById("hero");
-      if (bgWrapper && heroSection) {
+      const bgWrapper    = document.getElementById("neural-bg-wrapper");
+      const aboutSection = document.getElementById("about");
+      if (bgWrapper && aboutSection) {
         const update = () => {
-          // Show background once the hero's bottom edge clears the viewport
-          const heroBtm = heroSection.getBoundingClientRect().bottom;
-          bgWrapper.style.opacity = heroBtm < 80 ? "1" : "0";
+          const vh       = window.innerHeight;
+          const top      = aboutSection.getBoundingClientRect().top;
+          // 0 when About is at bottom of viewport, 1 when its top reaches 40% down
+          const progress = Math.max(0, Math.min(1, (vh - top) / (vh * 0.6)));
+          bgWrapper.style.opacity = String(progress.toFixed(3));
         };
         update();
         window.addEventListener("scroll", update, { passive: true });
