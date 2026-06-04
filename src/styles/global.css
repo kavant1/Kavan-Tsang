@@ -18,8 +18,8 @@
   --text-faint: #8d8d82;
   --border: #e5e2d7;
   --border-strong: #d2cec1;
-  --accent: #3b53f5;
-  --accent-2: #6173ff;
+  --accent: #2563eb;
+  --accent-2: #1d4ed8;
   --accent-contrast: #ffffff;
   --ring: color-mix(in srgb, var(--accent) 42%, transparent);
   --glow: color-mix(in srgb, var(--accent) 18%, transparent);
@@ -39,8 +39,8 @@
   --text-faint: #6c6c70;
   --border: #232327;
   --border-strong: #34343b;
-  --accent: #8094ff;
-  --accent-2: #9aaaff;
+  --accent: #60a5fa;
+  --accent-2: #93c5fd;
   --accent-contrast: #0a0a0c;
   --ring: color-mix(in srgb, var(--accent) 48%, transparent);
   --glow: color-mix(in srgb, var(--accent) 22%, transparent);
@@ -71,25 +71,15 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;
-  transition: background-color 0.5s ease, color 0.5s ease;
 }
 
-/* Atmospheric accent wash behind everything */
-body::before {
-  content: "";
-  position: fixed;
-  inset: 0;
-  z-index: -2;
-  pointer-events: none;
-  background:
-    radial-gradient(1100px 620px at 100% -8%, var(--glow), transparent 60%),
-    radial-gradient(
-      820px 520px at -10% 2%,
-      color-mix(in srgb, var(--accent) 7%, transparent),
-      transparent 55%
-    );
-  transition: opacity 0.5s ease;
+/* Disable all transitions for one frame when theme switches */
+.theme-switching, .theme-switching * {
+  transition: none !important;
+  animation-duration: 0.001s !important;
 }
+
+/* body::before removed — replaced by the canvas flow-field background */
 
 ::selection {
   background: var(--accent);
@@ -187,12 +177,26 @@ img {
 .section-head {
   margin-bottom: clamp(2rem, 4vw, 3.25rem);
 }
+.section-head .overline {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+}
+.section-head .overline::before {
+  content: '';
+  display: inline-block;
+  width: 18px;
+  height: 2px;
+  border-radius: 1px;
+  background: linear-gradient(90deg, var(--accent), transparent);
+  flex-shrink: 0;
+}
 .section-title {
   margin: 0.85rem 0 0;
-  font-weight: 700;
-  letter-spacing: -0.03em;
-  line-height: 1.04;
-  font-size: clamp(2.05rem, 5vw, 3.4rem);
+  font-weight: 800;
+  letter-spacing: -0.04em;
+  line-height: 1.02;
+  font-size: clamp(2.2rem, 5.5vw, 3.8rem);
 }
 .lede {
   color: var(--text-muted);
@@ -204,16 +208,18 @@ img {
    Components
    ============================================================ */
 .card {
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: 1.1rem;
-  transition: border-color 0.3s ease, box-shadow 0.3s ease,
-    transform 0.3s ease, background-color 0.5s ease;
+  background: color-mix(in srgb, var(--surface) 92%, var(--bg));
+  border: 1px solid color-mix(in srgb, var(--border) 75%, transparent);
+  border-radius: 1.25rem;
+  transition: border-color 0.35s ease, box-shadow 0.35s ease, transform 0.35s ease;
 }
 .card-hover:hover {
-  border-color: var(--border-strong);
-  box-shadow: var(--shadow-lg);
-  transform: translateY(-4px);
+  border-color: color-mix(in srgb, var(--accent) 45%, var(--border));
+  box-shadow:
+    0 0 0 1px color-mix(in srgb, var(--accent) 14%, transparent),
+    0 20px 60px color-mix(in srgb, var(--accent) 9%, rgba(0,0,0,0.28)),
+    0 4px 16px rgba(0,0,0,0.1);
+  transform: translateY(-5px);
 }
 
 .btn {
@@ -235,11 +241,15 @@ img {
   transform: translateY(1px);
 }
 .btn-primary {
-  background: var(--accent);
+  background: linear-gradient(135deg, var(--accent) 0%, color-mix(in srgb, var(--accent) 65%, #818cf8) 100%);
   color: var(--accent-contrast);
+  box-shadow: 0 4px 20px color-mix(in srgb, var(--accent) 28%, transparent);
+  transition: all 0.25s ease;
 }
 .btn-primary:hover {
-  background: var(--accent-2);
+  background: linear-gradient(135deg, var(--accent-2) 0%, color-mix(in srgb, var(--accent-2) 65%, #6366f1) 100%);
+  box-shadow: 0 6px 28px color-mix(in srgb, var(--accent) 40%, transparent);
+  transform: translateY(-2px);
 }
 .btn-ghost {
   background: transparent;
@@ -264,9 +274,11 @@ img {
   transition: color 0.2s, background-color 0.2s, border-color 0.2s;
 }
 a.chip:hover,
-.chip-link:hover {
+.chip-link:hover,
+.chip:hover {
   color: var(--accent);
-  border-color: color-mix(in srgb, var(--accent) 45%, var(--border));
+  border-color: color-mix(in srgb, var(--accent) 50%, var(--border));
+  background: color-mix(in srgb, var(--accent) 8%, transparent);
 }
 
 .hairline {
@@ -444,11 +456,183 @@ a.chip:hover,
 } /* end @layer components */
 
 /* ============================================================
+   Ocean depth overlay  (body::after — body::before is reserved)
+   ============================================================ */
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 2;
+  background:
+    radial-gradient(ellipse 150% 90% at 50% 125%, rgb(3, 14, 72) 0%, rgba(2, 10, 50, 0.55) 40%, transparent 70%),
+    radial-gradient(ellipse 80%  50% at 50% 145%, rgb(1,  6,  34) 0%, transparent 60%);
+  opacity: min(var(--ocean-opacity, 0), 0.28);
+  will-change: opacity;
+}
+[data-theme="dark"] body::after {
+  background:
+    radial-gradient(ellipse 150% 90% at 50% 125%, rgb(3, 16, 90) 0%, rgba(2, 10, 60, 0.7) 40%, transparent 70%),
+    radial-gradient(ellipse 80%  50% at 50% 145%, rgb(1,  5,  38) 0%, transparent 60%);
+  opacity: min(var(--ocean-opacity, 0), 0.78);
+}
+
+/* ============================================================
+   Fade-in animation (used by React hero component)
+   ============================================================ */
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.animate-fade-in-long {
+  animation: fadeInUp 1.2s cubic-bezier(0.16, 1, 0.3, 1) both;
+  animation-delay: 0.4s;
+}
+
+/* ============================================================
+   Film grain
+   ============================================================ */
+html::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  pointer-events: none;
+  opacity: 0.032;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 300px 300px;
+}
+
+/* ============================================================
+   Gradient hero text
+   ============================================================ */
+.gradient-text {
+  background: linear-gradient(125deg, var(--text) 0%, var(--accent) 60%, #818cf8 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+[data-theme="dark"] .gradient-text {
+  background: linear-gradient(125deg, #ffffff 10%, var(--accent) 55%, #a78bfa 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ============================================================
+   Stats bar
+   ============================================================ */
+.stats-bar {
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  padding: 2.5rem 0;
+}
+.stat-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 1rem 0.5rem;
+}
+@media (min-width: 768px) {
+  .stat-item + .stat-item { border-left: 1px solid var(--border); }
+}
+.stat-number {
+  font-size: clamp(2.2rem, 5vw, 3.6rem);
+  font-weight: 800;
+  color: var(--accent);
+  line-height: 1;
+  letter-spacing: -0.03em;
+  font-variant-numeric: tabular-nums;
+}
+.stat-label {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  margin-top: 0.45rem;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+}
+
+/* ============================================================
+   Typewriter cursor
+   ============================================================ */
+.tw-cursor {
+  display: inline-block;
+  width: 2px;
+  height: 0.85em;
+  background: var(--accent);
+  margin-left: 1px;
+  vertical-align: text-bottom;
+  animation: tw-blink 0.75s step-end infinite;
+}
+@keyframes tw-blink {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0; }
+}
+
+/* ============================================================
+   PFD unit hover tooltips
+   ============================================================ */
+.pfd-unit {
+  cursor: default;
+}
+.pfd-unit:hover ~ .pfd-highlight,
+.pfd-unit:hover {
+  filter: brightness(1.5);
+}
+
+/* ============================================================
+   Skill groups
+   ============================================================ */
+.skill-group { margin-top: 1.25rem; }
+.skill-group:first-child { margin-top: 0; }
+.skill-group-label {
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.09em;
+  color: var(--text-faint);
+  margin-bottom: 0.5rem;
+}
+
+/* ============================================================
+   Featured project card
+   ============================================================ */
+.featured-card {
+  border-color: color-mix(in srgb, var(--accent) 28%, var(--border));
+  background: color-mix(in srgb, var(--accent) 4%, var(--surface));
+}
+.featured-badge {
+  display: inline-block;
+  font-size: 0.68rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--accent);
+  background: color-mix(in srgb, var(--accent) 12%, transparent);
+  border: 1px solid color-mix(in srgb, var(--accent) 25%, transparent);
+  padding: 0.2rem 0.65rem;
+  border-radius: 999px;
+  margin-bottom: 0.9rem;
+}
+
+/* ============================================================
+   Molecular background (hero)
+   ============================================================ */
+.molecule-bg {
+  color: var(--accent);
+  opacity: 0.18;
+}
+[data-theme="dark"] .molecule-bg {
+  opacity: 0.09;
+}
+
+/* ============================================================
    Signal trace (signature motif)
    ============================================================ */
 .signal {
   color: var(--accent);
-  opacity: 0.16;
+  opacity: 0.45;
 }
 [data-theme="dark"] .signal {
   opacity: 0.2;
@@ -565,22 +749,81 @@ a.chip:hover,
 }
 
 /* ============================================================
+   PFD scroll progress (back-to-top)
+   ============================================================ */
+#scroll-progress {
+  position: fixed;
+  bottom: 1.75rem;
+  right: 1.75rem;
+  z-index: 200;
+  width: 224px;
+  height: 44px;
+  padding: 0;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: color-mix(in srgb, var(--surface) 92%, var(--bg));
+  color: var(--accent);
+  cursor: pointer;
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity 0.3s, transform 0.3s;
+  pointer-events: none;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.18);
+}
+#scroll-progress.visible {
+  opacity: 1;
+  transform: none;
+  pointer-events: auto;
+}
+#scroll-progress:hover {
+  transform: translateY(-2px);
+  border-color: color-mix(in srgb, var(--accent) 40%, var(--border));
+  box-shadow: 0 6px 28px color-mix(in srgb, var(--accent) 18%, rgba(0,0,0,0.2));
+}
+/* Tooltip */
+#scroll-progress::before {
+  content: "Back to top";
+  position: absolute;
+  right: calc(100% + 10px);
+  top: 50%;
+  transform: translateY(-50%);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  color: var(--text);
+  padding: 5px 10px;
+  border-radius: 6px;
+  font-size: 0.72rem;
+  font-family: var(--font-sans);
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s;
+  box-shadow: var(--shadow-lg);
+}
+#scroll-progress.visible:hover::before {
+  opacity: 1;
+}
+
+/* ============================================================
    Motion — reveal + hero rise
    ============================================================ */
 /* Reveals only hide when JS is present (avoids invisible content if JS fails) */
 .reveal {
-  transition: opacity 0.7s cubic-bezier(0.2, 0.7, 0.2, 1),
-    transform 0.7s cubic-bezier(0.2, 0.7, 0.2, 1);
+  transition: opacity 0.75s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.75s cubic-bezier(0.16, 1, 0.3, 1);
   transition-delay: var(--d, 0s);
 }
 .js .reveal {
   opacity: 0;
-  transform: translateY(20px);
+  transform: translateY(28px);
 }
 .js .reveal.is-visible {
   opacity: 1;
   transform: none;
 }
+/* Directional variants — add data-reveal="left|right" to any .reveal element */
+.js .reveal[data-reveal="left"]  { transform: translateX(-44px); }
+.js .reveal[data-reveal="right"] { transform: translateX(44px); }
 
 .js .rise {
   opacity: 0;

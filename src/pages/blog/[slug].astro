@@ -62,7 +62,7 @@ const formattedDate = frontmatter.pubDate
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <Seo
-      title={`${frontmatter.title} — Shidhartho Roy`}
+      title={`${frontmatter.title} — Kavan Tsang`}
       description={frontmatter.description ?? frontmatter.title}
       type="article"
       publishedTime={frontmatter.pubDate}
@@ -81,11 +81,7 @@ const formattedDate = frontmatter.pubDate
       (function () {
         document.documentElement.classList.add("js");
         try {
-          var t = localStorage.getItem("theme");
-          if (!t)
-            t = window.matchMedia("(prefers-color-scheme: dark)").matches
-              ? "dark"
-              : "light";
+          var t = localStorage.getItem("theme") || "light";
           document.documentElement.setAttribute("data-theme", t);
         } catch (e) {}
       })();

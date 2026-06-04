@@ -1,10 +1,9 @@
 ---
 import Header from "../components/Header.astro";
 import Hero from "../components/Hero.astro";
-import Talks from "../components/Talks.astro";
 import About from "../components/About.astro";
+import NeuralBackground from "../components/ui/flow-field-background";
 import Projects from "../components/Projects.astro";
-import Publications from "../components/Publications.astro";
 import Experience from "../components/Experience.astro";
 import Education from "../components/Education.astro";
 import Contact from "../components/Contact.astro";
@@ -23,7 +22,7 @@ import "../styles/global.css";
     <meta name="generator" content={Astro.generator} />
 
     <Seo
-      title="Shidhartho Roy — Biomedical Engineering PhD, CMU"
+      title="Kavan Tsang — Chemical &amp; Biomedical Engineering, CMU"
       description={siteConfig.description}
       jsonLd={[personSchema(Astro.site), websiteSchema(Astro.site)]}
     />
@@ -33,11 +32,7 @@ import "../styles/global.css";
       (function () {
         document.documentElement.classList.add("js");
         try {
-          var t = localStorage.getItem("theme");
-          if (!t)
-            t = window.matchMedia("(prefers-color-scheme: dark)").matches
-              ? "dark"
-              : "light";
+          var t = localStorage.getItem("theme") || "light";
           document.documentElement.setAttribute("data-theme", t);
         } catch (e) {}
       })();
@@ -51,13 +46,46 @@ import "../styles/global.css";
     />
   </head>
   <body>
+    <!-- Flow-field particle background — hidden until About section is reached -->
+    <div
+      id="neural-bg-wrapper"
+      class="fixed inset-0 pointer-events-none"
+      style="z-index: -3; opacity: 0; transition: opacity 1.8s ease;"
+    >
+      <NeuralBackground
+        client:only="react"
+        trailOpacity={0.12}
+        particleCount={500}
+        speed={0.9}
+      />
+    </div>
+
+    <script>
+      const bgWrapper    = document.getElementById("neural-bg-wrapper");
+      const aboutSection = document.getElementById("about");
+      if (bgWrapper && aboutSection) {
+        const observer = new IntersectionObserver(
+          ([entry]) => {
+            if (entry.isIntersecting) {
+              // About is on screen — show the background
+              bgWrapper.style.opacity = "1";
+            } else if (entry.boundingClientRect.top > 0) {
+              // About is below the viewport — user scrolled back up to hero
+              bgWrapper.style.opacity = "0";
+            }
+            // If top < 0 and not intersecting, user is below About — keep background visible
+          },
+          { threshold: 0.05 }
+        );
+        observer.observe(aboutSection);
+      }
+    </script>
+
     <Header />
     <main id="top">
       <Hero />
-      <Talks />
       <About />
       <Projects />
-      <Publications />
       <Experience />
       <Education />
       <Contact />

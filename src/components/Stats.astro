@@ -1,0 +1,21 @@
+---
+const stats = [
+  { number: "2+", label: "Years of Research" },
+  { number: "3",  label: "Engineering Projects" },
+  { number: "1",  label: "Industry Internship" },
+  { number: "2",  label: "Engineering Disciplines" },
+];
+---
+
+<div class="stats-bar">
+  <div class="shell">
+    <div class="grid grid-cols-2 md:grid-cols-4">
+      {stats.map((s, i) => (
+        <div class="stat-item reveal" style={`--d:${i * 0.08}s`}>
+          <span class="stat-number">{s.number}</span>
+          <span class="stat-label">{s.label}</span>
+        </div>
+      ))}
+    </div>
+  </div>
+</div>

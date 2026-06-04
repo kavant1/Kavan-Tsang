@@ -10,7 +10,7 @@ import { siteConfig } from "../config";
  * Privacy: email is intentionally never included (see config.ts / HANDOFF.md).
  */
 
-const FALLBACK_SITE = "https://royshidhartho.github.io";
+const FALLBACK_SITE = "https://kavant1.github.io";
 
 /** Resolve a path to an absolute URL against the configured site origin. */
 export function abs(path: string, site: string | URL = FALLBACK_SITE): string {
@@ -37,7 +37,7 @@ export function personSchema(site: string | URL = FALLBACK_SITE) {
     name: siteConfig.name,
     url: abs("/", site),
     image: abs("/images/blog/potrait_card.jpeg", site),
-    jobTitle: "PhD Student in Biomedical Engineering",
+    jobTitle: "Undergraduate Student in Chemical Engineering & Biomedical Engineering",
     description: siteConfig.aboutMe,
     affiliation: {
       "@type": "CollegeOrUniversity",
@@ -46,21 +46,16 @@ export function personSchema(site: string | URL = FALLBACK_SITE) {
     },
     alumniOf: [
       { "@type": "CollegeOrUniversity", name: "Carnegie Mellon University" },
-      {
-        "@type": "CollegeOrUniversity",
-        name: "Khulna University of Engineering and Technology",
-      },
     ],
     knowsAbout: [
-      "Electroencephalography (EEG)",
-      "Near-infrared spectroscopy (NIRS)",
-      "Frequency-domain near-infrared spectroscopy",
-      "Pain biomarkers",
-      "Neuroimaging",
-      "Biomedical signal processing",
-      "Machine learning",
-      "Extended reality",
-      "Sickle cell disease",
+      "Chemical Engineering",
+      "Biomedical Engineering",
+      "EEG data processing",
+      "Medical device testing",
+      "Computational fluid dynamics",
+      "COMSOL Multiphysics",
+      "Python data analysis",
+      "Reactor modeling",
     ],
     // LinkedIn / ResearchGate / Google Scholar / GitHub (no email).
     sameAs: Object.values(siteConfig.social).filter(Boolean),

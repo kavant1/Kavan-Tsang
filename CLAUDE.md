@@ -34,22 +34,34 @@ No linting or testing framework is configured.
 - **`siteConfig.accentColor` is currently vestigial** — the accent is driven by the `--accent` CSS variable, not that config value. Change the accent in `global.css`.
 - The theme toggle, scroll-reveal, and scrollspy logic all live in `Header.astro`'s `<script>`. `.reveal` elements start hidden and are shown by an IntersectionObserver (with a no-JS / no-IntersectionObserver fallback that reveals everything, so content is never lost). Motion respects `prefers-reduced-motion`.
 
-## Content lives in three different places
+## Content lives in four different places
 
-The template's original "everything in `src/config.ts`" model no longer holds. Content lives in three distinct places:
+The template's original "everything in `src/config.ts`" model no longer holds. Content lives in four distinct places:
 
-1. **`src/config.ts`** (`siteConfig`) — home-page content: `name`, `title`, `description`, `social`, `aboutMe`, `skills`, `projects`, `experience`, `education`.
+1. **`src/config.ts`** (`siteConfig`) — home-page section data: `name`, `title`, `description`, `social`, `aboutMe`, `skills`, `projects`, `experience`, `education`.
    - `social` keys are `linkedin`, `researchgate`, `scholar`, `github`. The template's `twitter` and the `email` were both removed — email is intentionally not exposed; contact happens via the form.
    - ⚠️ `config.ts` also still contains `publications` and `accentColor`, but **neither is currently used** — publications are hardcoded in the component (see below) and the accent comes from CSS variables. Editing them has no effect.
 2. **Hardcoded arrays inside components:**
-   - `src/components/Talks.astro` — the `talks` array (with a `COLLAPSE_AFTER = 5` "show all" collapse behavior).
-   - `src/components/Publications.astro` — the `publications` array plus the `domains` filter config. **This, not `config.ts`, is the source of truth for publications.**
+   - `src/components/Talks.astro` — the `talks` array (height-based CSS collapse after 5 items).
+   - `src/components/Publications.astro` — the `publications` array plus the `domains` filter config. **This, not `config.ts`, is the source of truth for publications.** Publications also collapse after 5 items in the "All" view, but via DOM `hidden` toggling (not CSS height like Talks).
 3. **`src/posts/*.md`** — blog posts. They live in `src/posts/`, **not** `src/pages/blog/`, so Astro doesn't auto-route them as bare unstyled pages. Frontmatter: `title`, `pubDate` (ISO date; sorts the list), and optional `description`, `author`, `image`, `tags`.
+4. **Hardcoded in individual components** (does **not** read from `siteConfig`):
+   - `src/components/Hero.astro` — the displayed name (`h1`), institutional tagline, hero paragraph, and CV link (`/files/shidhartho-roy-cv.pdf`) are all hardcoded. Portrait image is hardcoded as `/images/blog/potrait_card.jpeg`.
+   - `src/lib/seo.ts` — `personSchema` hardcodes `jobTitle`, `affiliation`, `alumniOf`, and `knowsAbout`. It also contains a `FALLBACK_SITE` constant (`https://royshidhartho.github.io`) used when `Astro.site` is undefined; update it alongside `astro.config.mjs`.
+   - `src/pages/blog/index.astro` — author fallback is hardcoded as `"Shidhartho Roy"`.
+
+## Static assets (`public/`)
+
+- `public/files/shidhartho-roy-cv.pdf` — CV PDF; path is hardcoded in `Hero.astro`.
+- `public/images/blog/potrait_card.jpeg` — portrait photo; used in `Hero.astro` (display) and `seo.ts` `personSchema` (schema.org image field).
+- `public/og-image.png` — 1200×630 social card; must be a raster (PNG/JPG), not SVG.
+- `public/favicon.svg`, `public/robots.txt`, `public/llms.txt` — replace all when personalizing.
 
 ## Architecture
 
 - **Home page** (`src/pages/index.astro`) composes section components in a fixed order: Header, Hero, Talks, About, Projects, Publications, Experience, Education, Contact, Footer.
 - **Conditional rendering**: **Projects, Experience, and Education** self-hide (both the nav link in `Header.astro` and the section itself, e.g. `Projects.astro` wraps its `<section>` in `hasProjects && (...)`) when their `siteConfig` array is empty. Talks, About, Publications, and Contact are always shown. Preserve this pattern when adding config-driven sections.
+- **Contact form** posts to a Formspree endpoint (`action="https://formspree.io/f/maqpndwp"` in `Contact.astro`). Replace this URL with a new Formspree form (or another service) when personalizing.
 - **Component CSS in `@layer components`** (in `global.css`) is deliberate: it lets Tailwind utilities (e.g. responsive `hidden`/`flex`) override component classes like `.btn`/`.icon-btn`. Put any component class that sets `display` in that layer, or utilities won't win.
 - **Accent**: see Theming above — driven by the `--accent` CSS variable, not `siteConfig.accentColor`.
 

@@ -1,35 +1,212 @@
 ---
 import { siteConfig } from "../config";
+import { GenerativeArtScene } from "./ui/anomalous-matter-hero";
 ---
 
 <section id="hero" class="relative overflow-hidden">
-  <div class="shell pt-32 pb-20 md:pt-40 md:pb-28">
+
+  <!-- 3-D generative art background (Three.js, React island) -->
+  <GenerativeArtScene client:load />
+
+  <!-- kept for SSR/no-JS fallback visibility — hidden once JS hydrates -->
+  <div class="molecule-bg absolute inset-0 overflow-hidden pointer-events-none js-hidden" aria-hidden="true">
+    <svg width="100%" height="100%" viewBox="0 0 1200 650" preserveAspectRatio="xMidYMid slice"
+      fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+
+      <!-- ── CLUSTER A (left): 3 fused rings ── -->
+      <polygon points="110,161 130.8,173 130.8,197 110,209 89.2,197 89.2,173" stroke-width="1.5"/>
+      <circle cx="110" cy="185" r="12" stroke-width="1.2"/>
+      <polygon points="151.6,161 172.4,173 172.4,197 151.6,209 130.8,197 130.8,173" stroke-width="1.5"/>
+      <polygon points="130.8,197 151.6,209 151.6,233 130.8,245 110,233 110,209" stroke-width="1.5"/>
+      <circle cx="130.8" cy="221" r="12" stroke-width="1.2"/>
+      <!-- chains -->
+      <line x1="110" y1="161" x2="88" y2="139" stroke-width="1.5"/>
+      <line x1="88" y1="139" x2="64" y2="125" stroke-width="1.5"/>
+      <circle cx="64" cy="125" r="3" fill="currentColor" stroke="none"/>
+      <line x1="89.2" y1="173" x2="62" y2="159" stroke-width="1.5"/>
+      <circle cx="62" cy="159" r="3" fill="currentColor" stroke="none"/>
+      <line x1="172.4" y1="173" x2="198" y2="157" stroke-width="1.5"/>
+      <line x1="198" y1="157" x2="226" y2="143" stroke-width="1.5"/>
+      <circle cx="226" cy="143" r="3" fill="currentColor" stroke="none"/>
+      <line x1="172.4" y1="197" x2="198" y2="211" stroke-width="1.5"/>
+      <circle cx="198" cy="211" r="3" fill="currentColor" stroke="none"/>
+      <line x1="130.8" y1="245" x2="130.8" y2="272" stroke-width="1.5"/>
+      <line x1="130.8" y1="272" x2="110" y2="290" stroke-width="1.5"/>
+      <circle cx="110" cy="290" r="3" fill="currentColor" stroke="none"/>
+      <line x1="110" y1="233" x2="84" y2="247" stroke-width="1.5"/>
+      <circle cx="84" cy="247" r="3" fill="currentColor" stroke="none"/>
+
+      <!-- ── CLUSTER B (center-top): 5 fused rings (pyrene-like) ── -->
+      <polygon points="400,116 420.8,128 420.8,152 400,164 379.2,152 379.2,128" stroke-width="1.5"/>
+      <circle cx="400" cy="140" r="12" stroke-width="1.2"/>
+      <polygon points="441.6,116 462.4,128 462.4,152 441.6,164 420.8,152 420.8,128" stroke-width="1.5"/>
+      <polygon points="483.2,116 504,128 504,152 483.2,164 462.4,152 462.4,128" stroke-width="1.5"/>
+      <circle cx="483.2" cy="140" r="12" stroke-width="1.2"/>
+      <polygon points="420.8,152 441.6,164 441.6,188 420.8,200 400,188 400,164" stroke-width="1.5"/>
+      <polygon points="462.4,152 483.2,164 483.2,188 462.4,200 441.6,188 441.6,164" stroke-width="1.5"/>
+      <circle cx="462.4" cy="176" r="12" stroke-width="1.2"/>
+      <!-- chains -->
+      <line x1="400" y1="116" x2="378" y2="92" stroke-width="1.5"/>
+      <line x1="378" y1="92" x2="356" y2="76" stroke-width="1.5"/>
+      <circle cx="356" cy="76" r="3" fill="currentColor" stroke="none"/>
+      <line x1="483.2" y1="116" x2="506" y2="92" stroke-width="1.5"/>
+      <line x1="506" y1="92" x2="532" y2="80" stroke-width="1.5"/>
+      <circle cx="532" cy="80" r="3" fill="currentColor" stroke="none"/>
+      <line x1="504" y1="140" x2="534" y2="140" stroke-width="1.5"/>
+      <line x1="534" y1="140" x2="560" y2="124" stroke-width="1.5"/>
+      <circle cx="560" cy="124" r="3" fill="currentColor" stroke="none"/>
+      <line x1="420.8" y1="200" x2="400" y2="220" stroke-width="1.5"/>
+      <line x1="400" y1="220" x2="378" y2="236" stroke-width="1.5"/>
+      <circle cx="378" cy="236" r="3" fill="currentColor" stroke="none"/>
+      <line x1="483.2" y1="188" x2="504" y2="208" stroke-width="1.5"/>
+      <circle cx="504" cy="208" r="3" fill="currentColor" stroke="none"/>
+      <line x1="379.2" y1="128" x2="354" y2="114" stroke-width="1.5"/>
+      <circle cx="354" cy="114" r="3" fill="currentColor" stroke="none"/>
+
+      <!-- ── CLUSTER C (right): 4 fused rings ── -->
+      <polygon points="780,196 800.8,208 800.8,232 780,244 759.2,232 759.2,208" stroke-width="1.5"/>
+      <circle cx="780" cy="220" r="12" stroke-width="1.2"/>
+      <polygon points="821.6,196 842.4,208 842.4,232 821.6,244 800.8,232 800.8,208" stroke-width="1.5"/>
+      <polygon points="800.8,232 821.6,244 821.6,268 800.8,280 780,268 780,244" stroke-width="1.5"/>
+      <circle cx="800.8" cy="256" r="12" stroke-width="1.2"/>
+      <polygon points="863.2,196 884,208 884,232 863.2,244 842.4,232 842.4,208" stroke-width="1.5"/>
+      <!-- chains -->
+      <line x1="780" y1="196" x2="758" y2="172" stroke-width="1.5"/>
+      <line x1="758" y1="172" x2="734" y2="158" stroke-width="1.5"/>
+      <circle cx="734" cy="158" r="3" fill="currentColor" stroke="none"/>
+      <line x1="759.2" y1="208" x2="730" y2="194" stroke-width="1.5"/>
+      <circle cx="730" cy="194" r="3" fill="currentColor" stroke="none"/>
+      <line x1="884" y1="220" x2="914" y2="220" stroke-width="1.5"/>
+      <line x1="914" y1="220" x2="940" y2="204" stroke-width="1.5"/>
+      <line x1="940" y1="204" x2="968" y2="218" stroke-width="1.5"/>
+      <circle cx="968" cy="218" r="3" fill="currentColor" stroke="none"/>
+      <line x1="884" y1="208" x2="910" y2="192" stroke-width="1.5"/>
+      <circle cx="910" cy="192" r="3" fill="currentColor" stroke="none"/>
+      <line x1="800.8" y1="280" x2="800.8" y2="308" stroke-width="1.5"/>
+      <line x1="800.8" y1="308" x2="778" y2="322" stroke-width="1.5"/>
+      <circle cx="778" cy="322" r="3" fill="currentColor" stroke="none"/>
+      <line x1="821.6" y1="268" x2="842.4" y2="284" stroke-width="1.5"/>
+      <circle cx="842.4" cy="284" r="3" fill="currentColor" stroke="none"/>
+
+      <!-- ── CLUSTER D (bottom-center): 3 fused rings ── -->
+      <polygon points="570,398 589,409 589,431 570,442 551,431 551,409" stroke-width="1.5"/>
+      <circle cx="570" cy="420" r="11" stroke-width="1.2"/>
+      <polygon points="608,398 627,409 627,431 608,442 589,431 589,409" stroke-width="1.5"/>
+      <polygon points="589,431 608,442 608,464 589,475 570,464 570,442" stroke-width="1.5"/>
+      <!-- chains -->
+      <line x1="570" y1="398" x2="548" y2="374" stroke-width="1.5"/>
+      <line x1="548" y1="374" x2="524" y2="360" stroke-width="1.5"/>
+      <circle cx="524" cy="360" r="3" fill="currentColor" stroke="none"/>
+      <line x1="627" y1="420" x2="658" y2="420" stroke-width="1.5"/>
+      <line x1="658" y1="420" x2="684" y2="404" stroke-width="1.5"/>
+      <circle cx="684" cy="404" r="3" fill="currentColor" stroke="none"/>
+      <line x1="589" y1="475" x2="570" y2="496" stroke-width="1.5"/>
+      <circle cx="570" cy="496" r="3" fill="currentColor" stroke="none"/>
+      <line x1="551" y1="420" x2="520" y2="420" stroke-width="1.5"/>
+      <line x1="520" y1="420" x2="494" y2="436" stroke-width="1.5"/>
+      <circle cx="494" cy="436" r="3" fill="currentColor" stroke="none"/>
+
+      <!-- ── ISOLATED RING: top-right (950, 130) ── -->
+      <polygon points="950,108 969,119 969,141 950,152 931,141 931,119" stroke-width="1.5"/>
+      <circle cx="950" cy="130" r="11" stroke-width="1.2"/>
+      <line x1="969" y1="119" x2="994" y2="103" stroke-width="1.5"/>
+      <circle cx="994" cy="103" r="3" fill="currentColor" stroke="none"/>
+      <line x1="931" y1="119" x2="906" y2="103" stroke-width="1.5"/>
+      <line x1="906" y1="103" x2="880" y2="117" stroke-width="1.5"/>
+      <circle cx="880" cy="117" r="3" fill="currentColor" stroke="none"/>
+      <line x1="950" y1="152" x2="950" y2="178" stroke-width="1.5"/>
+      <circle cx="950" cy="178" r="3" fill="currentColor" stroke="none"/>
+
+      <!-- ── ISOLATED RING: bottom-right (1050, 450) ── -->
+      <polygon points="1050,430 1067.3,440 1067.3,460 1050,470 1032.7,460 1032.7,440" stroke-width="1.5"/>
+      <line x1="1067.3" y1="450" x2="1096" y2="450" stroke-width="1.5"/>
+      <circle cx="1096" cy="450" r="3" fill="currentColor" stroke="none"/>
+      <line x1="1032.7" y1="440" x2="1010" y2="424" stroke-width="1.5"/>
+      <circle cx="1010" cy="424" r="3" fill="currentColor" stroke="none"/>
+      <line x1="1050" y1="470" x2="1050" y2="496" stroke-width="1.5"/>
+      <circle cx="1050" cy="496" r="3" fill="currentColor" stroke="none"/>
+
+      <!-- ── ISOLATED RING: top-left (240, 80) ── -->
+      <polygon points="240,60 257.3,70 257.3,90 240,100 222.7,90 222.7,70" stroke-width="1.5"/>
+      <circle cx="240" cy="80" r="10" stroke-width="1.2"/>
+      <line x1="240" y1="60" x2="240" y2="36" stroke-width="1.5"/>
+      <line x1="240" y1="36" x2="260" y2="18" stroke-width="1.5"/>
+      <circle cx="260" cy="18" r="3" fill="currentColor" stroke="none"/>
+      <line x1="257.3" y1="70" x2="284" y2="56" stroke-width="1.5"/>
+      <circle cx="284" cy="56" r="3" fill="currentColor" stroke="none"/>
+      <line x1="222.7" y1="70" x2="196" y2="56" stroke-width="1.5"/>
+      <circle cx="196" cy="56" r="3" fill="currentColor" stroke="none"/>
+      <line x1="222.7" y1="90" x2="196" y2="104" stroke-width="1.5"/>
+      <circle cx="196" cy="104" r="3" fill="currentColor" stroke="none"/>
+
+      <!-- ── ISOLATED RING: bottom-left (1150, 320) ── -->
+      <polygon points="1150,298 1169,309 1169,331 1150,342 1131,331 1131,309" stroke-width="1.5"/>
+      <line x1="1131" y1="320" x2="1102" y2="320" stroke-width="1.5"/>
+      <circle cx="1102" cy="320" r="3" fill="currentColor" stroke="none"/>
+      <line x1="1150" y1="298" x2="1150" y2="272" stroke-width="1.5"/>
+      <circle cx="1150" cy="272" r="3" fill="currentColor" stroke="none"/>
+      <line x1="1169" y1="309" x2="1194" y2="295" stroke-width="1.5"/>
+      <circle cx="1194" cy="295" r="3" fill="currentColor" stroke="none"/>
+
+      <!-- ── SCATTERED bond chains ── -->
+      <circle cx="50" cy="380" r="3" fill="currentColor" stroke="none"/>
+      <line x1="50" y1="380" x2="76" y2="364" stroke-width="1.5"/>
+      <line x1="76" y1="364" x2="104" y2="378" stroke-width="1.5"/>
+      <line x1="104" y1="378" x2="130" y2="362" stroke-width="1.5"/>
+      <circle cx="130" cy="362" r="3" fill="currentColor" stroke="none"/>
+
+      <circle cx="700" cy="60" r="3" fill="currentColor" stroke="none"/>
+      <line x1="700" y1="60" x2="730" y2="44" stroke-width="1.5"/>
+      <line x1="730" y1="44" x2="758" y2="58" stroke-width="1.5"/>
+      <circle cx="758" cy="58" r="3" fill="currentColor" stroke="none"/>
+      <line x1="758" y1="58" x2="784" y2="44" stroke-width="1.5"/>
+      <circle cx="784" cy="44" r="3" fill="currentColor" stroke="none"/>
+
+      <circle cx="310" cy="340" r="3" fill="currentColor" stroke="none"/>
+      <line x1="310" y1="340" x2="338" y2="324" stroke-width="1.5"/>
+      <line x1="338" y1="324" x2="366" y2="338" stroke-width="1.5"/>
+      <circle cx="366" cy="338" r="3" fill="currentColor" stroke="none"/>
+
+      <circle cx="640" cy="290" r="3" fill="currentColor" stroke="none"/>
+      <line x1="640" y1="290" x2="668" y2="274" stroke-width="1.5"/>
+      <line x1="668" y1="274" x2="696" y2="288" stroke-width="1.5"/>
+      <circle cx="696" cy="288" r="3" fill="currentColor" stroke="none"/>
+
+      <circle cx="150" cy="530" r="3" fill="currentColor" stroke="none"/>
+      <line x1="150" y1="530" x2="178" y2="514" stroke-width="1.5"/>
+      <line x1="178" y1="514" x2="206" y2="528" stroke-width="1.5"/>
+      <circle cx="206" cy="528" r="3" fill="currentColor" stroke="none"/>
+
+      <!-- junction accent dots -->
+      <circle cx="420.8" cy="200" r="4" fill="currentColor" stroke="none"/>
+      <circle cx="462.4" cy="152" r="4" fill="currentColor" stroke="none"/>
+      <circle cx="800.8" cy="232" r="4" fill="currentColor" stroke="none"/>
+      <circle cx="589" cy="431" r="4" fill="currentColor" stroke="none"/>
+    </svg>
+  </div>
+
+  <div class="shell pt-32 pb-20 md:pt-40 md:pb-28 relative" style="z-index: 1;">
     <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-10 items-center">
       <div class="lg:col-span-7">
-        <span class="overline rise">
-          Carnegie Mellon University · Biomedical Engineering
-        </span>
+        <span id="hero-tagline" class="overline" aria-label="Carnegie Mellon University · Chemical Engineering & Biomedical Engineering"></span>
 
         <h1
-          class="rise mt-6 font-bold tracking-tight leading-[1.02] text-[clamp(2.8rem,8vw,5.6rem)]"
+          class="gradient-text rise mt-6 font-extrabold tracking-tight leading-[1.15] pb-1 text-[clamp(2.8rem,8vw,5.6rem)]"
           style="--d:.06s"
         >
-          Shidhartho<br />Roy
+          Kavan Tsang
         </h1>
 
         <p
           class="rise mt-7 max-w-xl text-[clamp(1.1rem,2.4vw,1.4rem)] leading-relaxed t-muted"
           style="--d:.16s"
         >
-          I study the neural and physiological <em class="serif t-accent"
-            >signals</em
-          > of pain — building EEG, near-infrared, and extended-reality methods
-          toward more equitable neuroengineering.
+          Studying <span class="t-accent">chemical</span> and <span class="t-accent">biomedical engineering</span> at Carnegie Mellon — building at the intersection of fluid systems, medical devices, and computational modeling.
         </p>
 
         <div class="rise mt-9 flex flex-wrap items-center gap-3" style="--d:.24s">
           <a href="#projects" class="btn btn-primary">
-            Explore research
+            View projects
             <svg
               width="16"
               height="16"
@@ -42,14 +219,6 @@ import { siteConfig } from "../config";
             >
               <path d="M5 12h14M13 6l6 6-6 6"></path>
             </svg>
-          </a>
-          <a
-            href="/files/shidhartho-roy-cv.pdf"
-            target="_blank"
-            rel="noopener noreferrer"
-            class="btn btn-ghost"
-          >
-            Download CV
           </a>
         </div>
 
@@ -169,33 +338,151 @@ import { siteConfig } from "../config";
             style="background: radial-gradient(60% 60% at 50% 0%, var(--glow), transparent 75%)"
           >
           </div>
-          <img
-            src="/images/blog/potrait_card.jpeg"
-            alt="Portrait of Shidhartho Roy"
-            width="420"
-            height="420"
-            class="card w-[min(78vw,360px)] aspect-square rounded-[1.5rem] object-cover"
-          />
+          <div
+            class="card w-[min(78vw,360px)] aspect-square rounded-[1.5rem] flex items-center justify-center"
+            style="background: var(--surface-2); border: 2px dashed var(--border-strong);"
+          >
+            <svg
+              width="72"
+              height="72"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              style="color: var(--border-strong);"
+              aria-hidden="true"
+            >
+              <circle cx="12" cy="8" r="4" />
+              <path d="M4 20c0-4 3.6-7 8-7s8 3 8 7" />
+            </svg>
+          </div>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- Signature signal trace -->
+  <!-- Chemical process flow diagram (hidden) -->
   <svg
-    class="signal pointer-events-none absolute bottom-0 left-0 w-full h-24"
-    viewBox="0 0 1200 140"
+    class="signal absolute bottom-0 left-1/2 -translate-x-1/2 w-3/4 h-24 hidden" style="z-index: 1;"
+    viewBox="-50 -8 1300 158"
     preserveAspectRatio="none"
     aria-hidden="true"
-    style="--len:3200"
+    fill="none"
+    stroke="currentColor"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+    vector-effect="non-scaling-stroke"
   >
-    <path
-      d="M0 80 H110 l16 -42 l14 70 l16 -58 l18 44 H300 q42 -52 84 0 H440 l20 -46 l16 66 l16 -52 H620 c40 0 40 40 80 40 H760 l18 -58 l16 72 l16 -46 H940 q44 -46 88 0 H1080 l18 -38 l16 54 l16 -34 H1200"
-      fill="none"
-      stroke="currentColor"
-      stroke-width="2"
-      stroke-linecap="round"
-      stroke-linejoin="round"
-      vector-effect="non-scaling-stroke"></path>
+    <!-- Feed stream -->
+    <path d="M0 95 H50" stroke-width="2.2" />
+    <path d="M48 86 L64 95 L48 104" stroke-width="2.2" />
+
+    <!-- Feed tank (open-top storage vessel) -->
+    <path d="M64 62 V128 H116 V62" stroke-width="2.2" />
+    <path d="M64 108 H116" stroke-width="1.4" stroke-dasharray="5 3" />
+
+    <!-- Pipe: tank → heat exchanger -->
+    <path d="M116 95 H192" stroke-width="2.2" />
+
+    <!-- Heat exchanger (shell & tube) -->
+    <rect x="192" y="72" width="122" height="46" rx="3" stroke-width="2.2" />
+    <path d="M192 85 H314 M192 95 H314 M192 106 H314" stroke-width="1.2" />
+    <path d="M226 72 V56 M288 118 V134" stroke-width="1.8" />
+    <path d="M218 56 H234 M280 134 H296" stroke-width="1.8" />
+
+    <!-- Pipe: HX → reactor (with flow arrow) -->
+    <path d="M314 95 H395" stroke-width="2.2" />
+    <path d="M368 86 L384 95 L368 104" stroke-width="2" />
+
+    <!-- CSTR stirred tank reactor — heating jacket -->
+    <path d="M388 62 H396 M388 128 H396" stroke-width="1.8" />
+    <path d="M554 62 H548 M554 128 H548" stroke-width="1.8" />
+    <path d="M388 62 V128 M554 62 V128" stroke-width="1.8" />
+    <path d="M388 80 H373 M388 116 H373" stroke-width="1.8" />
+    <!-- Vessel body -->
+    <rect x="396" y="52" width="152" height="76" stroke-width="2.2" />
+    <!-- Agitator shaft -->
+    <path d="M472 52 V128" stroke-width="2" />
+    <!-- Impeller blades -->
+    <path d="M449 72 H495 M449 112 H495" stroke-width="2.2" />
+    <!-- Motor -->
+    <rect x="463" y="38" width="18" height="14" rx="2" stroke-width="1.8" />
+
+    <!-- Pipe: reactor → valve (with flow arrow) -->
+    <path d="M548 95 H618" stroke-width="2.2" />
+    <path d="M594 86 L610 95 L594 104" stroke-width="2" />
+
+    <!-- Gate valve (bowtie symbol) -->
+    <path d="M618 76 L650 95 L618 114 Z" stroke-width="2" />
+    <path d="M650 76 L618 95 L650 114 Z" stroke-width="2" />
+    <path d="M634 76 V62 M626 62 H642" stroke-width="1.8" />
+
+    <!-- Pipe: valve → distillation column -->
+    <path d="M650 95 H718" stroke-width="2.2" />
+
+    <!-- Distillation column -->
+    <rect x="718" y="5" width="56" height="132" rx="4" stroke-width="2.2" />
+    <!-- Trays (alternating left / right) -->
+    <path d="M718 28 H752" stroke-width="1.5" />
+    <path d="M742 46 H774" stroke-width="1.5" />
+    <path d="M718 64 H752" stroke-width="1.5" />
+    <path d="M742 82 H774" stroke-width="1.5" />
+    <path d="M718 104 H752" stroke-width="1.5" />
+    <path d="M742 120 H774" stroke-width="1.5" />
+
+    <!-- Overhead vapor line → condenser -->
+    <path d="M774 18 H858" stroke-width="2" />
+    <rect x="858" y="5" width="74" height="28" rx="3" stroke-width="2" />
+    <path d="M858 15 H932 M858 23 H932" stroke-width="1.1" />
+    <path d="M882 5 V-3 M910 33 V41" stroke-width="1.6" />
+
+    <!-- Distillate product out -->
+    <path d="M932 19 H1188" stroke-width="2" />
+    <path d="M1186 11 L1200 19 L1186 27" stroke-width="2" />
+
+    <!-- Bottoms → reboiler -->
+    <path d="M774 128 H858" stroke-width="2" />
+    <rect x="858" y="116" width="64" height="22" rx="3" stroke-width="2" />
+    <path d="M858 127 H922" stroke-width="1.1" />
+    <path d="M878 138 V146 M904 116 V108" stroke-width="1.6" />
+
+    <!-- Bottoms product out -->
+    <path d="M922 127 H1188" stroke-width="2" />
+    <path d="M1186 119 L1200 127 L1186 135" stroke-width="2" />
+
+    <!-- Invisible hit-areas for tooltips (pointer-events active) -->
+    <rect class="pfd-unit" x="55" y="55" width="70" height="82" fill="transparent" stroke="none"><title>Feed Storage Tank</title></rect>
+    <rect class="pfd-unit" x="188" y="63" width="132" height="64" fill="transparent" stroke="none"><title>Shell &amp; Tube Heat Exchanger</title></rect>
+    <rect class="pfd-unit" x="365" y="28" width="196" height="116" fill="transparent" stroke="none"><title>Jacketed CSTR — Stirred Tank Reactor</title></rect>
+    <rect class="pfd-unit" x="610" y="68" width="50" height="56" fill="transparent" stroke="none"><title>Gate Valve</title></rect>
+    <rect class="pfd-unit" x="710" y="-5" width="74" height="150" fill="transparent" stroke="none"><title>Distillation Column</title></rect>
+    <rect class="pfd-unit" x="848" y="-5" width="92" height="42" fill="transparent" stroke="none"><title>Overhead Condenser</title></rect>
+    <rect class="pfd-unit" x="848" y="107" width="82" height="42" fill="transparent" stroke="none"><title>Reboiler</title></rect>
   </svg>
 </section>
+
+<script>
+  // Hide static molecule-bg once JS is present (Three.js scene takes over)
+  document.querySelector(".js-hidden")?.classList.add("hidden");
+
+  // ── Typewriter on hero tagline ─────────────────────────────────
+  const tagline = document.getElementById("hero-tagline");
+  if (tagline) {
+    const text   = tagline.getAttribute("aria-label") || "";
+    const cursor = document.createElement("span");
+    cursor.className = "tw-cursor";
+    tagline.appendChild(cursor);
+    let i = 0;
+    const type = () => {
+      if (i < text.length) {
+        tagline.insertBefore(document.createTextNode(text[i++]), cursor);
+        setTimeout(type, i < 10 ? 60 : 28);
+      } else {
+        setTimeout(() => cursor.remove(), 1200);
+      }
+    };
+    setTimeout(type, 500);
+  }
+</script>

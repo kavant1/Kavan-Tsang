@@ -8,11 +8,9 @@ const hasEducation = siteConfig.education && siteConfig.education.length > 0;
 const navLinks = [
   { href: "/#about", label: "About", show: true },
   { href: "/#projects", label: "Projects", show: hasProjects },
-  { href: "/#publications", label: "Publications", show: true },
   { href: "/#experience", label: "Experience", show: hasExperience },
   { href: "/#education", label: "Education", show: hasEducation },
   { href: "/#contact", label: "Contact", show: true },
-  { href: "/blog", label: "Blog", show: true },
 ].filter((l) => l.show);
 ---
 
@@ -21,8 +19,8 @@ const navLinks = [
     <div class="flex flex-col md:flex-row md:items-start md:justify-between gap-10">
       <div class="max-w-sm">
         <a href="/#top" class="brand">
-          <span class="brand-mark">SR</span>
-          <span>Shidhartho Roy</span>
+          <span class="brand-mark">KT</span>
+          <span>Kavan Tsang</span>
         </a>
         <p class="t-muted text-sm mt-4 leading-relaxed">{siteConfig.title}</p>
 
@@ -86,7 +84,7 @@ const navLinks = [
 
     <div class="hairline mt-12 mb-6"></div>
     <p class="t-faint text-sm">
-      © {new Date().getFullYear()} {siteConfig.name}. Built with Astro.
+      © {new Date().getFullYear()} {siteConfig.name}.
     </p>
   </div>
 </footer>

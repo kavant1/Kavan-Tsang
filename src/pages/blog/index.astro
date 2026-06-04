@@ -35,7 +35,7 @@ const posts = Object.entries(postModules)
         title: frontmatter.title ?? "Untitled Post",
         description: frontmatter.description ?? "",
         pubDate: frontmatter.pubDate ?? "",
-        author: frontmatter.author ?? "Shidhartho Roy",
+        author: frontmatter.author ?? "Kavan Tsang",
         image: frontmatter.image ?? "",
         tags: frontmatter.tags ?? [],
       },
@@ -61,8 +61,8 @@ const remainingPosts = posts.filter((post) => post.slug !== featuredPost?.slug);
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <Seo
-      title="Blog — Shidhartho Roy"
-      description="Research updates, ongoing projects, and recommended reading from Shidhartho Roy."
+      title="Blog — Kavan Tsang"
+      description="Updates, projects, and writing from Kavan Tsang."
       jsonLd={[
         websiteSchema(Astro.site),
         breadcrumbSchema([
@@ -75,11 +75,7 @@ const remainingPosts = posts.filter((post) => post.slug !== featuredPost?.slug);
       (function () {
         document.documentElement.classList.add("js");
         try {
-          var t = localStorage.getItem("theme");
-          if (!t)
-            t = window.matchMedia("(prefers-color-scheme: dark)").matches
-              ? "dark"
-              : "light";
+          var t = localStorage.getItem("theme") || "light";
           document.documentElement.setAttribute("data-theme", t);
         } catch (e) {}
       })();

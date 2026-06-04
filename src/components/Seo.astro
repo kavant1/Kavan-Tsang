@@ -32,19 +32,15 @@ const {
   jsonLd = [],
 } = Astro.props;
 
-const site = Astro.site ?? new URL("https://royshidhartho.github.io");
+const site = Astro.site ?? new URL("https://kavant1.github.io");
 const canonical = new URL(Astro.url.pathname, site).href;
 const imageURL = new URL(image, site).href;
 
 const baseKeywords = [
-  "Shidhartho Roy",
-  "Biomedical Engineering",
-  "EEG",
-  "NIRS",
-  "near-infrared spectroscopy",
-  "pain biomarkers",
-  "neuroimaging",
+  "Kavan Tsang",
+  "Chemical Engineering",
   "Carnegie Mellon University",
+  "undergraduate",
 ];
 const keywords = [...new Set([...baseKeywords, ...tags])].join(", ");
 
