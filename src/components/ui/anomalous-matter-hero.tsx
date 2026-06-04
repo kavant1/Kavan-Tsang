@@ -183,7 +183,7 @@ export function GenerativeArtScene() {
     <div
       ref={mountRef}
       className="absolute inset-0 w-full h-full"
-      style={{ zIndex: 0, opacity: 0.38 }}
+      style={{ zIndex: 0, opacity: 0.28 }}
     />
   );
 }
