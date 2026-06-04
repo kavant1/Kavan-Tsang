@@ -1,6 +1,8 @@
 ---
 import { siteConfig } from "../config";
 import { GenerativeArtScene } from "./ui/anomalous-matter-hero";
+import { Image } from "astro:assets";
+import portrait from "../assets/portrait.jpeg";
 ---
 
 <section id="hero" class="relative overflow-hidden">
@@ -338,26 +340,14 @@ import { GenerativeArtScene } from "./ui/anomalous-matter-hero";
             style="background: radial-gradient(60% 60% at 50% 0%, var(--glow), transparent 75%)"
           >
           </div>
-          <div
-            class="card w-[min(78vw,360px)] aspect-square rounded-[1.5rem] flex items-center justify-center"
-            style="background: var(--surface-2); border: 2px dashed var(--border-strong);"
-          >
-            <svg
-              width="72"
-              height="72"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="1.2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              style="color: var(--border-strong);"
-              aria-hidden="true"
-            >
-              <circle cx="12" cy="8" r="4" />
-              <path d="M4 20c0-4 3.6-7 8-7s8 3 8 7" />
-            </svg>
-          </div>
+          <Image
+            src={portrait}
+            alt="Kavan Tsang"
+            width={360}
+            height={360}
+            class="w-[min(78vw,360px)] aspect-square rounded-[1.5rem] object-cover object-[center_30%]"
+            style="border: 2px solid var(--border);"
+          />
         </div>
       </div>
 
