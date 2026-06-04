@@ -51,7 +51,7 @@ const [featured, ...rest] = siteConfig.projects ?? [];
 
         {/* Remaining projects grid */}
         {rest.length > 0 && (
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
             {rest.map((project, index) => {
               const Tag = project.link ? "a" : "div";
               const linkProps = project.link
