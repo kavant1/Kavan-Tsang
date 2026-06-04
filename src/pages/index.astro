@@ -50,7 +50,7 @@ import "../styles/global.css";
     <div
       id="neural-bg-wrapper"
       class="fixed inset-0 pointer-events-none"
-      style="z-index: -3; opacity: 0;"
+      style="z-index: -3; opacity: 0; transition: opacity 0.25s ease-out;"
     >
       <NeuralBackground
         client:only="react"
@@ -77,8 +77,13 @@ import "../styles/global.css";
 
           bgWrapper.style.opacity = String((entry * depth).toFixed(3));
         };
+        let raf = 0;
+        const onScroll = () => {
+          cancelAnimationFrame(raf);
+          raf = requestAnimationFrame(update);
+        };
         update();
-        window.addEventListener("scroll", update, { passive: true });
+        window.addEventListener("scroll", onScroll, { passive: true });
       }
     </script>
 
