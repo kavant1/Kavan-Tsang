@@ -65,11 +65,17 @@ import "../styles/global.css";
       const aboutSection = document.getElementById("about");
       if (bgWrapper && aboutSection) {
         const update = () => {
-          const vh       = window.innerHeight;
-          const top      = aboutSection.getBoundingClientRect().top;
-          // 0 when About is at bottom of viewport, 1 when its top reaches 40% down
-          const progress = Math.max(0, Math.min(1, (vh - top) / (vh * 0.6)));
-          bgWrapper.style.opacity = String(progress.toFixed(3));
+          const vh         = window.innerHeight;
+          const pageH      = document.documentElement.scrollHeight - vh;
+          const top        = aboutSection.getBoundingClientRect().top;
+
+          // Gate: 0→1 as About section enters the viewport
+          const entry      = Math.max(0, Math.min(1, (vh - top) / (vh * 0.6)));
+
+          // Depth: starts at 0.15 near About, grows to 1.0 at bottom of page
+          const depth      = 0.15 + Math.max(0, Math.min(1, window.scrollY / pageH)) * 0.85;
+
+          bgWrapper.style.opacity = String((entry * depth).toFixed(3));
         };
         update();
         window.addEventListener("scroll", update, { passive: true });
