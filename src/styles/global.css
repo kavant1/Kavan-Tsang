@@ -825,8 +825,9 @@ html::after {
 }
 /* Directional variants — desktop only; mobile uses plain translateY */
 @media (min-width: 768px) {
-  .js .reveal[data-reveal="left"]  { transform: translateX(-44px); }
-  .js .reveal[data-reveal="right"] { transform: translateX(44px); }
+  .js .reveal[data-reveal="left"]           { transform: translateX(-44px); }
+  .js .reveal[data-reveal="right"]          { transform: translateX(44px); }
+  .js .reveal[data-reveal].is-visible       { transform: none; }
 }
 
 .js .rise {
