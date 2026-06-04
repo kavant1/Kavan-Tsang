@@ -824,8 +824,10 @@ html::after {
   transform: none;
 }
 /* Directional variants — add data-reveal="left|right" to any .reveal element */
-.js .reveal[data-reveal="left"]  { transform: translateX(-44px); }
-.js .reveal[data-reveal="right"] { transform: translateX(44px); }
+.js .reveal[data-reveal="left"]        { transform: translateX(-44px); }
+.js .reveal[data-reveal="right"]       { transform: translateX(44px); }
+/* Must come last — higher specificity resets transform once animated in */
+.js .reveal[data-reveal].is-visible    { transform: none; }
 
 .js .rise {
   opacity: 0;
