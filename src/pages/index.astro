@@ -66,16 +66,15 @@ import "../styles/global.css";
       if (bgWrapper && aboutSection) {
         const observer = new IntersectionObserver(
           ([entry]) => {
-            if (entry.isIntersecting) {
-              // About is on screen — show the background
+            // Only activate after the user has actually scrolled (not on initial load)
+            if (entry.isIntersecting && window.scrollY > 80) {
               bgWrapper.style.opacity = "1";
-            } else if (entry.boundingClientRect.top > 0) {
-              // About is below the viewport — user scrolled back up to hero
+            } else if (!entry.isIntersecting && entry.boundingClientRect.top > 0) {
+              // Scrolled back up above About — hide
               bgWrapper.style.opacity = "0";
             }
-            // If top < 0 and not intersecting, user is below About — keep background visible
           },
-          { threshold: 0.05 }
+          { threshold: 0.1 }
         );
         observer.observe(aboutSection);
       }

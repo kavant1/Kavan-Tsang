@@ -110,6 +110,7 @@ export function GenerativeArtScene() {
     const geos: THREE.BufferGeometry[] = [];
     const mats: THREE.Material[]       = [];
 
+    // Single noise-displaced wireframe nucleus — no satellites
     const noiseMat = new THREE.ShaderMaterial({
       uniforms: {
         time:          { value: 0 },
@@ -122,64 +123,12 @@ export function GenerativeArtScene() {
     });
     mats.push(noiseMat);
 
-    const atomMat = new THREE.MeshBasicMaterial({
-      color: accentHex, wireframe: true, transparent: true, opacity: 0.72,
-    });
-    mats.push(atomMat);
-
-    const bondMat = new THREE.LineBasicMaterial({
-      color: accentHex, transparent: true, opacity: 0.45,
-    });
-    mats.push(bondMat);
-
     const group = new THREE.Group();
     scene.add(group);
 
-    // Central nucleus
-    const nucleusGeo = new THREE.IcosahedronGeometry(0.52, 32);
+    const nucleusGeo = new THREE.IcosahedronGeometry(1.1, 32);
     geos.push(nucleusGeo);
     group.add(new THREE.Mesh(nucleusGeo, noiseMat));
-
-    const addAtom = (pos: THREE.Vector3, r: number) => {
-      const geo = new THREE.SphereGeometry(r, 10, 10);
-      geos.push(geo);
-      const mesh = new THREE.Mesh(geo, atomMat);
-      mesh.position.copy(pos);
-      group.add(mesh);
-      const bondGeo = new THREE.BufferGeometry().setFromPoints([
-        new THREE.Vector3(0, 0, 0), pos,
-      ]);
-      geos.push(bondGeo);
-      group.add(new THREE.Line(bondGeo, bondMat));
-    };
-
-    // 6 equatorial ring atoms
-    const RING_R = 1.25;
-    const ringPos: THREE.Vector3[] = [];
-    for (let i = 0; i < 6; i++) {
-      const a = (i / 6) * Math.PI * 2;
-      const p = new THREE.Vector3(Math.cos(a) * RING_R, 0, Math.sin(a) * RING_R);
-      ringPos.push(p);
-      addAtom(p, 0.18);
-    }
-    // Close the ring
-    for (let i = 0; i < 6; i++) {
-      const bGeo = new THREE.BufferGeometry().setFromPoints([
-        ringPos[i], ringPos[(i + 1) % 6],
-      ]);
-      geos.push(bGeo);
-      group.add(new THREE.Line(bGeo, bondMat));
-    }
-
-    // Axial atoms
-    addAtom(new THREE.Vector3(0,  1.45, 0), 0.21);
-    addAtom(new THREE.Vector3(0, -1.45, 0), 0.21);
-
-    // Diagonal secondary atoms
-    const SEC = 1.05;
-    for (const [x, y, z] of [[SEC,0.7,0],[-SEC,0.7,0],[SEC,-0.7,0],[-SEC,-0.7,0]]) {
-      addAtom(new THREE.Vector3(x, y, z), 0.13);
-    }
 
     // Lighting
     const pointLight = new THREE.PointLight(0xffffff, 1, 100);
