@@ -823,12 +823,9 @@ html::after {
   opacity: 1;
   transform: none;
 }
-/* Directional variants — desktop only; mobile uses plain translateY */
-@media (min-width: 768px) {
-  .js .reveal[data-reveal="left"]           { transform: translateX(-44px); }
-  .js .reveal[data-reveal="right"]          { transform: translateX(44px); }
-  .js .reveal[data-reveal].is-visible       { transform: none; }
-}
+/* Directional variants — add data-reveal="left|right" to any .reveal element */
+.js .reveal[data-reveal="left"]  { transform: translateX(-44px); }
+.js .reveal[data-reveal="right"] { transform: translateX(44px); }
 
 .js .rise {
   opacity: 0;
