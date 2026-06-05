@@ -77,7 +77,7 @@ export function TubelightNavBar() {
                 scrollLocked.current = false;
               }, 1000);
             }}
-            className="relative rounded-full px-5 py-2 text-sm font-semibold cursor-pointer no-underline select-none"
+            className="relative rounded-full px-3 sm:px-5 py-2 text-sm font-semibold cursor-pointer no-underline select-none"
             style={{ color: isActive ? "var(--accent)" : "var(--text-muted)" }}
           >
             {/* Desktop: text label */}

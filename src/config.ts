@@ -23,6 +23,7 @@ export const siteConfig = {
     "Aspen Plus",
     "AutoCAD",
     "Microsoft Excel",
+    "PsychoPy",
     "EEG data processing",
     "Signal processing",
     "Fluid systems modeling",

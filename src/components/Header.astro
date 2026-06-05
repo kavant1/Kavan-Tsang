@@ -45,14 +45,14 @@ import { TubelightNavBar } from "./ui/tubelight-navbar";
 
     <!-- Brand -->
     <a href="#top" class="brand" aria-label={siteConfig.name}>
-      <span class="brand-mark">KT</span>
+      <span class="brand-name hidden sm:inline">Kavan's Portfolio</span>
     </a>
 
     <!-- Tubelight nav (React island) -->
     <TubelightNavBar client:load />
 
     <!-- Theme toggle -->
-    <div class="flex items-center gap-2.5">
+    <div class="flex items-center gap-2.5 justify-end">
       <button
         id="theme-toggle"
         class="icon-btn theme-toggle"
